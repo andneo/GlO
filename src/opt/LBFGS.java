@@ -165,11 +165,11 @@ public class LBFGS extends Optimiser{
 				Hop.fail = true;
 				rms = -1;
 			}
-			System.out.println("ENERGY: " + potential.energy(x, rotation));
+			//System.out.println("ENERGY: " + potential.energy(x, rotation));
 		}
 		//System.out.println(potential.toString().substring(4, 7));
-		//System.out.println("ENERGY: " + potential.energy(x, rotation));
-		//System.out.println("i: " + iter);
+		System.out.println("ENERGY: " + potential.energy(x, rotation));
+		System.out.println("i: " + iter);
 		//System.out.println("\n");
 		Hop.iter(iter);
 		return x;
@@ -185,8 +185,8 @@ public class LBFGS extends Optimiser{
 		 LBFGS lbfgs = new LBFGS();
 		 Rotation sxna = new SXNA();
 		 
-		 double[] x = {-0.0804505953, 1.3318831021, 0.3396285110, 
-				  	    0.0804505953,-2.3318831021,-0.3396285110,
+		 double[] x = {-1.0804505953, 1.3318831021, 0.3396285110, 
+				  	    1.0804505953,-3.3318831021,-0.3396285110,
 				  	    0.8322660626,-0.7372539898, 0.1893163762,
 				  	    1.8960194774, 1.3595002754, 0.1897039342};
 		 

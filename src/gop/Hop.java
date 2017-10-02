@@ -410,6 +410,7 @@ public class Hop {//java.util.Observable {
 		
 		String pot = "LJ";
 		//pot = "TIP";
+		pot = "Benzene";
 		
 		//String o = "AA";
 		String o = "SXNA";
@@ -417,6 +418,6 @@ public class Hop {//java.util.Observable {
 		Hop s = new Hop();
 		
 		//setParameters(int n, int nAtoms, double c, int seed, String LOpt, String lineSearch, String potential, String orientation, boolean random, double tStep, double rStep)
-		s.gOptimise(10, 100, 5.0, 7, opt, lS, pot, o, false, 0.5, 1.0);
+		s.gOptimise(0, 3, 20.0, 7, opt, lS, pot, o, false, 1.5, 1.0);
 	}
 }

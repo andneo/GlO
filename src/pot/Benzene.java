@@ -124,14 +124,14 @@ public class Benzene extends Potential {
 			}
 		}
 		
-		//for(int i = 0; i < r.length; i++) {
-		//	if(i < 6 || i > 11 && i < 18) {
-		//		System.out.println("C " + r[i][0] + " " + r[i][1] + " " + r[i][2]);
-		//	} else {
-		//		System.out.println("H " + r[i][0] + " " + r[i][1] + " " + r[i][2]);
-		//	}
-		//}
-		//System.out.println();
+		for(int i = 0; i < r.length; i++) {
+			if(i < 6 || i > 11 && i < 18) {
+				System.out.println("C " + r[i][0] + " " + r[i][1] + " " + r[i][2]);
+			} else {
+				System.out.println("H " + r[i][0] + " " + r[i][1] + " " + r[i][2]);
+			}
+		}
+		System.out.println();
 	}
 
 	public double energy(double[] x, Rotation rotation) {
@@ -247,11 +247,11 @@ public class Benzene extends Potential {
 						r_7 	= r_2*r_2*r_2*r_1;
 						
 						if(i < 6 && j < 6) {
-							dUdr = r_1*(-B[0]*C[0]*Math.exp(-C[0]*rij) + 6.0*A[0]*r_7 - coulomb*(q[0]*q[0])*r_2);
+							dUdr = -r_1*(-B[0]*C[0]*Math.exp(-C[0]*rij) + 6.0*A[0]*r_7 - coulomb*(q[0]*q[0])*r_2);
 						} else if(i >= 6 && j >= 6) {
-							dUdr = r_1*(-B[2]*C[2]*Math.exp(-C[2]*rij) + 6.0*A[2]*r_7 - coulomb*(q[1]*q[1])*r_2);
+							dUdr = -r_1*(-B[2]*C[2]*Math.exp(-C[2]*rij) + 6.0*A[2]*r_7 - coulomb*(q[1]*q[1])*r_2);
 						} else {
-							dUdr = r_1*(-B[1]*C[1]*Math.exp(-C[1]*rij) + 6.0*A[1]*r_7 - coulomb*(q[0]*q[1])*r_2);
+							dUdr = -r_1*(-B[1]*C[1]*Math.exp(-C[1]*rij) + 6.0*A[1]*r_7 - coulomb*(q[0]*q[1])*r_2);
 						}
 						
 						g[k-2] 	-= dUdr*Rij[0];
@@ -263,13 +263,13 @@ public class Benzene extends Potential {
 						g[m] 	+= dUdr*Rij[2];
 						
 						
-						g[l-2] 	-= dUdr*Rij[0]*DRX[o][0] + Rij[1]*DRX[o][1] + Rij[2]*DRX[o][2];
-						g[l-1] 	-= dUdr*Rij[0]*DRY[o][0] + Rij[1]*DRY[o][1] + Rij[2]*DRY[o][2];
-						g[l] 	-= dUdr*Rij[0]*DRZ[o][0] + Rij[1]*DRZ[o][1] + Rij[2]*DRZ[o][2];
+						g[l-2] 	-= dUdr*(Rij[0]*DRX[o][0] + Rij[1]*DRX[o][1] + Rij[2]*DRX[o][2]);
+						g[l-1] 	-= dUdr*(Rij[0]*DRY[o][0] + Rij[1]*DRY[o][1] + Rij[2]*DRY[o][2]);
+						g[l] 	-= dUdr*(Rij[0]*DRZ[o][0] + Rij[1]*DRZ[o][1] + Rij[2]*DRZ[o][2]);
 						
-						g[n-2] 	+= dUdr*Rij[0]*DRX[p][0] + Rij[1]*DRX[p][1] + Rij[2]*DRX[p][2];
-						g[n-1] 	+= dUdr*Rij[0]*DRY[p][0] + Rij[1]*DRY[p][1] + Rij[2]*DRY[p][2];
-						g[n] 	+= dUdr*Rij[0]*DRZ[p][0] + Rij[1]*DRZ[p][1] + Rij[2]*DRZ[p][2];
+						g[n-2] 	+= dUdr*(Rij[0]*DRX[p][0] + Rij[1]*DRX[p][1] + Rij[2]*DRX[p][2]);
+						g[n-1] 	+= dUdr*(Rij[0]*DRY[p][0] + Rij[1]*DRY[p][1] + Rij[2]*DRY[p][2]);
+						g[n] 	+= dUdr*(Rij[0]*DRZ[p][0] + Rij[1]*DRZ[p][1] + Rij[2]*DRZ[p][2]);
 						
 					}
 				}
