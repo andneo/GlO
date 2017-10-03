@@ -29,5 +29,32 @@ public class Centre {
 		
 		return x;
 	}
+	
+	public boolean tooClose(double[] x) {
+		boolean tClose = false;
+		double[] Rij = new double[3];
+		double rij = 0.0;
+		
+		for(int i = 0; i < x.length/2; i+=3) {
+			for(int j = i+3; j < x.length/2; j+=3) {
+				Rij[0] = x[i] - x[j];
+				Rij[1] = x[i+1] - x[j+1];
+				Rij[2] = x[i+2] - x[j+2];
+				
+				rij = Math.sqrt(Rij[0]*Rij[0] + Rij[1]*Rij[1] + Rij[2]*Rij[2]); 
+				
+				if(rij < 2.3) {
+					tClose = true;
+					//System.out.println(rij + ", Too Close");
+					System.out.println(Rij[0] + " " +Rij[1] + " " + Rij[2]);
+					break;
+				}
+			}
+			
+			if(tClose) break;
+		}
+		
+		return tClose;
+	}
 
 }

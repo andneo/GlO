@@ -68,6 +68,39 @@ public class Benzene extends Potential {
 		
 		return rbsites;	
 	}
+	
+	public double[][] viewBZ(double[] x, Rotation rotation) {
+		
+		double[] p      	= new double[3];
+		double[][] RM   	= new double[3][3];
+		double[][] DRMX 	= new double[3][3];
+		double[][] DRMY 	= new double[3][3];
+		double[][] DRMZ 	= new double[3][3];
+		double[] rb     	= new double[3];
+		double[][] rbcoords = new double[((x.length/2)/3)*12][3];
+		int offset 			= x.length/2;
+		int k = 0;
+		
+		for(int i = 0; i < offset; i+=3) {
+			p[0] = x[i+offset];
+			p[1] = x[i+1+offset];
+			p[2] = x[i+2+offset];
+			
+			Mat mat = new Mat();
+			rotation.rotDrvt(p, RM, DRMX, DRMY, DRMZ, false);
+			
+			for(int j = 0; j < 12; j++) {
+				rb = mat.vdot(RM,  getRBSites()[j]);
+				rbcoords[(k*12)+j][0] = x[i]   + rb[0]; 
+				rbcoords[(k*12)+j][1] = x[i+1] + rb[1]; 
+				rbcoords[(k*12)+j][2] = x[i+2] + rb[2]; 
+			}
+			k++;
+		}
+		
+		return rbcoords;
+		
+	}
 
 	private void RMDRVT(int nmol, double[] x, double[][] r, double[][] DRX, double[][] DRY, double[][] DRZ, String ort, boolean g, Rotation rotation) {
 		int offset = 3*nmol;
@@ -123,15 +156,6 @@ public class Benzene extends Potential {
 				}
 			}
 		}
-		
-		for(int i = 0; i < r.length; i++) {
-			if(i < 6 || i > 11 && i < 18) {
-				System.out.println("C " + r[i][0] + " " + r[i][1] + " " + r[i][2]);
-			} else {
-				System.out.println("H " + r[i][0] + " " + r[i][1] + " " + r[i][2]);
-			}
-		}
-		System.out.println();
 	}
 
 	public double energy(double[] x, Rotation rotation) {
@@ -291,6 +315,8 @@ public class Benzene extends Potential {
 		 
 		 System.out.println(b.energy(x, sxna));
 		 b.grad(x, sxna);
+		 
+		 b.viewBZ(x, sxna);
 	}
 
 }

@@ -160,16 +160,18 @@ public class LBFGS extends Optimiser{
 			//	fw.coordsFilm((x.length/2)/3, x, "TIP4P", rotation, iter);
 			//}
 			
-			if(iter > 50000) {
+			if(iter > 1000 || Double.isInfinite(potential.energy(x, rotation)) || Math.abs(potential.energy(x, rotation)) > 1E8) {
 				System.out.println("FAILED");
 				Hop.fail = true;
 				rms = -1;
 			}
+			
 			//System.out.println("ENERGY: " + potential.energy(x, rotation));
+
 		}
 		//System.out.println(potential.toString().substring(4, 7));
-		System.out.println("ENERGY: " + potential.energy(x, rotation));
-		System.out.println("i: " + iter);
+		//System.out.println("ENERGY: " + potential.energy(x, rotation));
+		//System.out.println("i: " + iter);
 		//System.out.println("\n");
 		Hop.iter(iter);
 		return x;

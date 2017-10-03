@@ -280,6 +280,12 @@ public class Hop {//java.util.Observable {
 			
 			//Calculate the energy of the new geometry.
 			setECurr(pot.energy(getX(), rotation));
+			
+			//If a step fails write it out in the output.
+			if(fail == true) {
+				wo.failedStep(getOptimiser(), getAtoms(), getN(), getSeed(),
+				              ite, (System.currentTimeMillis() - time));
+			} else {
 			 
 			double a = r1.nextDouble(); 
 			
@@ -364,11 +370,6 @@ public class Hop {//java.util.Observable {
 				wo.rejectedStep(getOptimiser(), getAtoms(), getN(), getSeed(), getC(), 
 						        getE(), getECurr(), i1, ite, i, (System.currentTimeMillis() - time));
 			}
-			
-			//If a step fails write it out in the output.
-			if(fail == true) {
-				wo.failedStep(getOptimiser(), getAtoms(), getN(), getSeed(),
-				              ite, (System.currentTimeMillis() - time));
 			}
 			
 			System.gc();
@@ -418,6 +419,6 @@ public class Hop {//java.util.Observable {
 		Hop s = new Hop();
 		
 		//setParameters(int n, int nAtoms, double c, int seed, String LOpt, String lineSearch, String potential, String orientation, boolean random, double tStep, double rStep)
-		s.gOptimise(0, 3, 20.0, 7, opt, lS, pot, o, false, 1.5, 1.0);
+		s.gOptimise(1000, 7, 10.0, 6, opt, lS, pot, o, false, 1.5, 1.5);
 	}
 }

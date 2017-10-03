@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import pot.Benzene;
 import pot.TIP4P;
 import rotation.Rotation;
 
@@ -186,7 +187,7 @@ public class Writer {
 				} catch (IOException e1) {
 				}
 			}
-		} else {
+		} else if(potential == "TIP"){
 			TIP4P tip = new TIP4P();
 			double[][] rbcoords = new double[atoms*3][3];
 			try {
@@ -221,6 +222,39 @@ public class Writer {
 				}
 			}
 			
+		} else {
+			Benzene bz = new Benzene();
+			double[][] rbcoords = new double[atoms*12][3];
+			try {
+				writer = new BufferedWriter(new FileWriter("COORDS_" + optimiser + "_" + atoms + "_" + n + "Steps_" + seed + ".xyz", false));
+				for(int j = 0; j < lowest.size(); j++) {
+					if(j > 0) {
+						writer.newLine();
+					}
+					writer.write(String.valueOf(atoms*12));
+					writer.newLine();
+					writer.write("Energy of minimum = " +  lowest.get(j).getE() + " found at step " + lowest.get(j).getStep());
+					writer.newLine();
+					rbcoords = bz.viewBZ(lowest.get(j).getX(), rotation);
+					for(int a = 0; a < rbcoords.length; a++) {
+						if(a%12 < 6) {
+							writer.write("C " + String.valueOf(rbcoords[a][0]) + " " + String.valueOf(rbcoords[a][1]) + " " + String.valueOf(rbcoords[a][2]) + " ");
+							writer.newLine();
+						} else {
+							writer.write("H " + String.valueOf(rbcoords[a][0]) + " " + String.valueOf(rbcoords[a][1]) + " " + String.valueOf(rbcoords[a][2]) + " ");
+							writer.newLine();
+						}
+					}
+				}
+			} catch (IOException e1) {
+			}
+			{
+				try {
+					if (writer != null)
+						writer.close();
+				} catch (IOException e1) {
+				}
+			}
 		}
 	}
 	
@@ -244,7 +278,7 @@ public class Writer {
 				} catch (IOException e1) {
 				}
 			}
-		} else {
+		} else if(potential == "TIP"){
 			TIP4P tip = new TIP4P();
 			double[][] rbcoords = new double[atoms*3][3];
 			try {
@@ -271,6 +305,32 @@ public class Writer {
 				}
 			}
 			
+		} else {
+			Benzene bz = new Benzene();
+			double[][] rbcoords = new double[atoms*12][3];
+			try {
+				writer = new BufferedWriter(new FileWriter("COORDS_" + optimiser + "_" + atoms + "_" + n + "Steps_" + seed + ".xyz", true));
+				writer.write(String.valueOf(atoms*3));
+				writer.newLine();
+				rbcoords = bz.viewBZ(x, rotation);
+				for(int a = 0; a < rbcoords.length; a++) {
+					if(a%12 < 6) {
+						writer.write("C " + String.valueOf(rbcoords[a][0]) + " " + String.valueOf(rbcoords[a][1]) + " " + String.valueOf(rbcoords[a][2]) + " ");
+						writer.newLine();
+					} else {
+						writer.write("H " + String.valueOf(rbcoords[a][0]) + " " + String.valueOf(rbcoords[a][1]) + " " + String.valueOf(rbcoords[a][2]) + " ");
+						writer.newLine();
+					}
+				}
+			} catch (IOException e1) {
+			}
+			{
+				try {
+					if (writer != null)
+						writer.close();
+				} catch (IOException e1) {
+				}
+			}
 		}
 	}
 	

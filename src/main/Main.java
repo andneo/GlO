@@ -20,6 +20,7 @@ public class Main {
 		
 		String pot = "LJ";
 		pot = "TIP";
+		pot = "Benzene";
 		
 		//String o = "AA";
 		String o = "SXNA";

@@ -12,6 +12,10 @@ public class Rand {
 	
 	public double[] setRandX(double[] x, double c, int atoms, String potential, Random r) {
 		
+		Centre ce = new Centre();
+		
+		boolean tClose = true;
+		
 		if(potential == "LJ") {
 			for(int a = 0; a < x.length; a++) {
 				x[a] = ((r.nextDouble()*2.0) - 1.0*c);
@@ -23,13 +27,18 @@ public class Rand {
 			double qdot = 0.0;
 			double[] q = new double[4];
 			
+			while(tClose) {
+				for(int a = 0; a < offset; a += 3) {
+					// Generate random translational coordinates
+					x[a]   = ((r.nextDouble()*2.0) - 1.0)*c;
+					x[a+1] = ((r.nextDouble()*2.0) - 1.0)*c;
+					x[a+2] = ((r.nextDouble()*2.0) - 1.0)*c;
+					
+				}
+				tClose = ce.tooClose(x);
+			}
+			
 			for(int a = 0; a < offset; a += 3) {
-				
-				// Generate random translational coordinates
-				x[a]   = ((r.nextDouble()*2.0) - 1.0)*c;
-				x[a+1] = ((r.nextDouble()*2.0) - 1.0)*c;
-				x[a+2] = ((r.nextDouble()*2.0) - 1.0)*c;
-				
 				// Generate random rotational coordinates from random unit quaternion
 				q = randQuat(r);
 				
